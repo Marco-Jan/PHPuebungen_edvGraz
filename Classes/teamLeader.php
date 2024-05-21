@@ -1,29 +1,36 @@
 <?php
-namespace Classes;
 
-use Person\Person;
-use Interfaces\ITeamLeader;
+declare(strict_types=1);
 
-class TeamLeader extends Person implements ITeamLeader {
-    private $projects = [];
+require_once 'Person.php';
+require_once 'interface.php';
 
-    public function addProject($project) {
+
+class TeamLeader extends Person implements ITeamLeader
+{
+    private array $projects = [];
+
+    public function addProject(object $project): void
+    {
         $this->projects[] = $project;
     }
 
-    public function getProjects() {
+    public function getProjects(): array
+    {
         return $this->projects;
     }
 
-    public function setDeveloper($dev, $prId) {
+    public function setDeveloper(object $developer, string $prjId): void
+    {
         foreach ($this->projects as $project) {
-            if ($project->getId() === $prId) {
-                $project->addDeveloper($dev);
+            if ($project->getId() === $prjId) {
+                $project->addDeveloper($developer);
             }
         }
     }
 
-    public function changeProjectStatus($status, $prId) {
+    public function changeProjectStatus(bool $status, string $prId): void
+    {
         foreach ($this->projects as $project) {
             if ($project->getId() === $prId) {
                 $project->setStatus($status);
@@ -31,4 +38,5 @@ class TeamLeader extends Person implements ITeamLeader {
         }
     }
 }
-?>
+
+

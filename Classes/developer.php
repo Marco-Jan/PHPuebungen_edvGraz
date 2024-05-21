@@ -1,34 +1,47 @@
 <?php
-namespace Classes;
+declare(strict_types=1);
 
-use Person\Person;
-use Interfaces\IDeveloper;
+require_once 'Person.php';
+require_once 'interface.php';
 
-class Developer extends Person implements IDeveloper {
-    private $skills = [];
+class Developer extends Person implements IDeveloper
+{
+    private array $skills = [];
 
-    public function getSkills() {
+    public function __construct(
+        string $name,
+        string $email,
+        array $skills = []
+        
+        ) {
+        parent::__construct($name, $email);
+        $this->skills = $skills;
+    }
+
+    public function progress(object $project, int $progress): void
+    {
+        $project->setProgress($progress);
+    }
+
+    public function getSkills(): array
+    {
         return $this->skills;
     }
 
-    public function addSkills($skill) {
+    public function addSkill(string $skill): void
+    {
         $this->skills[] = $skill;
     }
 
-    public function getAssignedProjects($projects) {
+    public function getAssignedProjects(array $projects): array
+    {
         $assignedProjects = [];
         foreach ($projects as $project) {
-            if (in_array($this, $project->getDevelopers())) {
+            if (in_array($this, $project->getDevelopers(), true)) {
                 $assignedProjects[] = $project;
             }
         }
         return $assignedProjects;
     }
-
-    public function progress($project, $progress) {
-        if (in_array($this, $project->getDevelopers())) {
-            $project->setProgress($progress);
-        }
-    }
 }
-?>
+   
