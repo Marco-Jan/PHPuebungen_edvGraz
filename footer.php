@@ -1,5 +1,4 @@
-<?php global $depot; ?>
-<footer> &copy; |edvgraz| - Depot IBAN: <?= $depot->iban ?> </footer>
+<footer> &copy; |edvgraz|</footer>
 </body>
 </html>
 

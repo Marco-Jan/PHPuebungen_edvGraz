@@ -1,73 +1,29 @@
 <?php
-// require_once 'Depot.php';#
-// require_once 'Stock.php';#
+
+include __DIR__ . '/header.php';
 
 spl_autoload_register(function ($class) {
     include $class . '.php';
 });
 
-$microsoft = new Stock(1, 'MSFT', 240.0);
-$apple = new Stock(2, 'AAPL', 304.0);
-$paypal = new Stock(3, 'PYPL', 102.0);
-$nvidia = new Stock(4, 'NVDA', 756.0);
 
+use Classes\TeamLeader;
+use Classes\Developer;
+use Classes\Project;
 
+$teamLeader = new TeamLeader("John Doe", "john@example.com");
+$developer = new Developer("Jane Smith", "jane@example.com");
+$project = new Project("1", "Projekt A");
 
-$data = [
-    'balance' => 3000.00,
-    'iban' => 'AT123456789',
-    'owner' => 'Lukas Ludwig',
-    'stocks' => [
-        ['label' => 'MSFT', 'price' => 240.0, 'amount' => 10],
-        ['label' => 'AAPL', 'price' => 304.0, 'amount' => 5],
-        ['label' => 'PYPL', 'price' => 102.0, 'amount' => 2],
-        ['label' => 'NVDA', 'price' => 756.0, 'amount' => 1],
-    ]
-];
+$teamLeader->addProject($project);
+$teamLeader->setDeveloper($developer, "1");
+$teamLeader->changeProjectStatus(true, "1");
 
-$my_depot = Depot::fromArray($data);
-var_dump($my_depot);
+// Ausgabe auf der Index-Seite
+echo "TeamLeader: " . $teamLeader->getName() . "<br>";
+echo "Project Name: " . $project->getName() . "<br>";
+echo "Project Status: " . ($project->getStatus() ? 'Active' : 'Inactive') . "<br>";
+echo "Developer: " . $developer->getName() . "<br>";
 
-
-$depot = new Depot([], 1000.0, 'AT123456789', 'Lucia Ludwig');
-
-$depot->deposit(4000.00);
-
-
-$depot->buyStocks($microsoft, 10);
-$depot->buyStocks($apple, 5);
-$depot->buyStocks($paypal, 2);
-$depot->buyStocks($nvidia, 1);
-
-
-include 'header.php';
+include __DIR__ . '/footer.php';
 ?>
-<!-- Hier kommt die Tabelle -->
-
-<main style="padding: 0;">
-
-    <table>
-        <tr>
-            <th>Label</th>
-            <th>Price/Piece</th>
-            <th>Amount</th>
-            <th>Value</th>
-        </tr>
-        <?php foreach ($depot->getStock() as $stock) : ?>
-            <tr>
-                <td><?= $stock->label ?></td>
-                <td><?= $stock->price ?></td>
-                <td><?= $stock->amount ?></td>
-                <td><?= $stock->price + $stock->amount ?></td>
-            </tr>
-        <?php endforeach ?>
-        <tr>
-            <td>Balance</td>
-            <td></td>
-            <td></td>
-            <td><?php $depot->balance ?></td>
-        </tr>
-    </table>
-</main>
-
-<?php include 'footer.php'; ?>
