@@ -2,17 +2,20 @@
 
 include __DIR__ . '/header.php';
 
-spl_autoload_register(function ($class) {
-    include $class . '.php';
+spl_autoload_register(function ($class){
+
+    include  $class . '.php';
+
 });
+
 
 
 use Classes\TeamLeader;
 use Classes\Developer;
 use Classes\Project;
 
-$teamLeader = new TeamLeader("John Doe", "john@example.com");
-$developer = new Developer("Jane Smith", "jane@example.com");
+$teamLeader = new TeamLeader("Max Mustermann", "max@muster.com");
+$developer = new Developer("Shirin Smith", "jane@smith.com");
 $project = new Project("1", "Projekt A");
 
 $teamLeader->addProject($project);
@@ -26,4 +29,5 @@ echo "Project Status: " . ($project->getStatus() ? 'Active' : 'Inactive') . "<br
 echo "Developer: " . $developer->getName() . "<br>";
 
 include __DIR__ . '/footer.php';
+
 ?>
